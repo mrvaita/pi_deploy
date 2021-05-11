@@ -32,7 +32,8 @@ def validate_request(req):
         print(f"Deploy signature failed: {x_hub_signature}")
         abort(abort_code)
 
-    if (payload := request.get_json()) is None:
+    payload = req.get_json()
+    if payload is None:
         print(f"Payload is empty: {payload}")
         abort(abort_code)
 

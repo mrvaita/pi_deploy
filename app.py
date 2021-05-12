@@ -15,12 +15,14 @@ def index():
 @app.route("/update_server", methods=["POST"])
 def webhook():
     if request.method == "POST":
-        payload = validate_request(request)
-        repo = git.Repo("/home/pi/Documents/git-repos/pi_deploy")
-        origin = repo.remotes.origin
-        origin.pull()
-            
-        return "Updated PythonAnywhere successfully", 200
+        try:
+            payload = validate_request(request)
+            repo = git.Repo("/home/pi/Documents/git-repos/pi_deploy")
+            origin = repo.remotes.origin
+            origin.pull()
+            return "Updated PythonAnywhere successfully", 200
+        except Exception as e:
+           raise Exception(e) 
     else:
         return "Wrong event type", 400
 
